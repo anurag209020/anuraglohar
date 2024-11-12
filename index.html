@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Certificate Form</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background: linear-gradient(to right, #4facfe, #00f2fe);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+        }
+        .form-container {
+            width: 350px;
+            padding: 20px;
+            background: #ffffff;
+            border-radius: 10px;
+            box-shadow: 0px 0px 15px rgba(0, 0, 0, 0.2);
+            text-align: center;
+        }
+        .form-container h2 {
+            margin-bottom: 20px;
+            color: #333;
+        }
+        .form-container label {
+            display: block;
+            margin-top: 10px;
+            font-weight: bold;
+            color: #555;
+        }
+        .form-container input {
+            width: 100%;
+            padding: 10px;
+            margin-top: 5px;
+            margin-bottom: 15px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            box-sizing: border-box;
+        }
+        .form-container button {
+            width: 100%;
+            padding: 12px;
+            background-color: #4facfe;
+            color: #fff;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+            font-weight: bold;
+        }
+        .form-container button:hover {
+            background-color: #00c6ff;
+        }
+        .certificate {
+            display: none;
+            margin-top: 20px;
+            padding: 20px;
+            width: 90%;
+            max-width: 500px;
+            background: #f8f9fa;
+            border: 3px solid #4facfe;
+            border-radius: 10px;
+            text-align: center;
+            box-shadow: 0px 0px 15px rgba(0, 0, 0, 0.2);
+        }
+        .certificate h2 {
+            color: #4facfe;
+            margin-bottom: 10px;
+        }
+        .certificate p {
+            color: #333;
+            font-size: 16px;
+        }
+        .certificate strong {
+            color: #333;
+        }
+        #downloadLink {
+            display: none;
+            margin-top: 15px;
+            padding: 10px 20px;
+            background-color: #4facfe;
+            color: white;
+            text-decoration: none;
+            font-weight: bold;
+            border-radius: 5px;
+        }
+    </style>
+</head>
+<body>
+
+<div class="form-container">
+    <h2>Student Form</h2>
+    <form id="studentForm">
+        <label for="name">Name:</label>
+        <input type="text" id="name" required>
+
+        <label for="surname">Surname:</label>
+        <input type="text" id="surname" required>
+
+        <label for="birthdate">Birth Date:</label>
+        <input type="date" id="birthdate" required>
+
+        <label for="standard">Standard:</label>
+        <input type="text" id="standard" required>
+
+        <button type="button" onclick="generateCertificate()">Submit</button>
+    </form>
+</div>
+
+<div class="certificate" id="certificate">
+    <h2>Swami Vivekananda Classes</h2>
+    <p>This certifies that</p>
+    <p><strong id="certName"></strong></p>
+    <p>of standard <strong id="certStandard"></strong></p>
+    <p>has successfully submitted their information.</p>
+    <p>Teacher: Vikram Patil Sir</p>
+    <a id="downloadLink" download="certificate.png">Download Certificate</a>
+</div>
+
+<script>
+    function generateCertificate() {
+        // Get form data
+        const name = document.getElementById('name').value;
+        const surname = document.getElementById('surname').value;
+        const birthdate = document.getElementById('birthdate').value;
+        const standard = document.getElementById('standard').value;
+
+        // Update certificate
+        document.getElementById('certName').innerText = name + " " + surname;
+        document.getElementById('certStandard').innerText = standard;
+
+        // Show certificate and download link
+        document.getElementById('certificate').style.display = 'block';
+
+        // Create download link
+        const certificateContent = document.getElementById('certificate');
+        html2canvas(certificateContent).then(canvas => {
+            const link = document.getElementById('downloadLink');
+            link.href = canvas.toDataURL("image/png");
+            link.style.display = 'inline-block';
+        });
+    }
+</script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+</body>
+</html>
